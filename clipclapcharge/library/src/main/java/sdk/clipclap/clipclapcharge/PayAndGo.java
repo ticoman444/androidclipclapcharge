@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -29,19 +30,14 @@ import sdk.clipclap.payandgo.R;
 public class PayAndGo extends Button{
 
 
-    public static String secretKey="MIIwwHc8ksK8AfwUcWJC";
+    public static String secretKey="pKFe1P2iYw6z73srBDBx";
     public static final int  DEVELOPMENT=1;
     public static  final int PRODUCTION=2;
     public static int img= R.mipmap.ic_launcher;
     public static JSONObject jsonObject;
     public static String failureMessage;
     public static String urlCallback;
-    public static String buttonColor;
-    public static String buttonTextColor;
-    public static String buttonText;
-    public static String textMessage;
-    public static String backGroundColor;
-    public static String textMessageColor;
+
     public static int type;
     private  OnClickListener onClickListener;
     private   Context ctx;
@@ -109,8 +105,8 @@ public void setSaveTokenListener(SaveTokenListener saveTokenListener){
         pd.show();
         Map<String, String> params= new HashMap<String, String>();
 
-         String url= (type==DEVELOPMENT)?"https://clipclap.co/Development/gatewayClipClap/sdk/clipclap.php":"https://clipclap.co/Production/gatewayClipClap/sdk/clipclap.php";
-    final String urlDeep=(type==DEVELOPMENT)?"ClipClapBilleteraD://?type=ClipClapWeb&token=":"ClipClapBilletera://?type=ClipClapWeb&token=";
+         String url= (type==DEVELOPMENT)?"https://clipclap.co/Production/gatewayClipClap/sdk/clipclap.php":"https://clipclap.co/Production/gatewayClipClap/sdk/clipclap.php";
+    final String urlDeep=(type==DEVELOPMENT)?"ClipClapBilletera://?type=ClipClapWeb&token=":"ClipClapBilletera://?type=ClipClapWeb&token=";
         try {
             HttpService.post3(ctx,url
                     ,
@@ -118,21 +114,15 @@ public void setSaveTokenListener(SaveTokenListener saveTokenListener){
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             resetDialog();
-                            Intent intent = new Intent(ctx,PayClipclapActivity.class);
+
                             try {
 
                                 mSaveTokenListener.saveToken(response.getString("token").toString());
-                                intent.putExtra(PayClipclapActivity.URL, urlDeep + response.getString("token").toString() + "&callbackurl="+urlCallback);
-                                intent.putExtra(PayClipclapActivity.RIMG, img);
-                                if(buttonColor!=null){intent.putExtra(PayClipclapActivity.BUTTONCOLOR,buttonColor);}
-                                if(buttonTextColor!=null){intent.putExtra(PayClipclapActivity.TEXTBUTTONCOLOR, textMessageColor);}
-                                if(buttonText!=null){intent.putExtra(PayClipclapActivity.TEXTBUTTON, buttonText);}
-                                if(textMessage!=null){intent.putExtra(PayClipclapActivity.TEXTMESSAGE, textMessage);}
-                                if(textMessageColor!=null){intent.putExtra(PayClipclapActivity.TEXTMESSAGECOLOR, textMessageColor);}
-                                if(backGroundColor!=null){intent.putExtra(PayClipclapActivity.BACKGROUNDCOLOR, backGroundColor);}
 
-
+                                Uri uri = Uri.parse(urlDeep + response.getString("token").toString() + "&callbackurl="+urlCallback);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                                 ctx.startActivity(intent);
+
                             }catch (Exception e){
                                 e.printStackTrace();
                                 if(failureMessage==null || failureMessage.equals("")){
@@ -148,9 +138,7 @@ public void setSaveTokenListener(SaveTokenListener saveTokenListener){
                         public void onSuccess(int statusCode, Header[] headers, String responseString) {
                             //      System.err.println("RESPONSE" + responseString);
                             resetDialog();
-                            Intent intent = new Intent(ctx,PayClipclapActivity.class);
-                            intent.getExtras().putString(PayClipclapActivity.URL,urlDeep+responseString);
-                            ctx.startActivity(intent);
+
                         }
 
                         @Override

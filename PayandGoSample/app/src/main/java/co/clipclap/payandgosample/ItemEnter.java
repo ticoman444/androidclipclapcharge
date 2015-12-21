@@ -92,12 +92,9 @@ public class ItemEnter extends AppCompatActivity {
 
 
                     //Create a new Object
-                    CCBilleteraPayment ccBilleteraPayment = new CCBilleteraPayment();
+                    CCBilleteraPayment ccBilleteraPayment = new CCBilleteraPayment("pKFe1P2iYw6z73srBDBx");
 
-
-
-                        ccBilleteraPayment.initialize("MIIwwHc8ksK8AfwUcWJC");
-                        PayAndGo.type = PayAndGo.DEVELOPMENT;
+                    PayAndGo.type = PayAndGo.DEVELOPMENT;
 
 
 
@@ -133,26 +130,7 @@ public class ItemEnter extends AppCompatActivity {
 
                     PayAndGo.jsonObject = ccBilleteraPayment.getJSON();
 
-                    /*
-                    //Customize your view
-                    //Edit Message Error
-                    PayAndGo.failureMessage = "Error, vuelva a intentarlo";
-                    //Edit Logo
-                    PayAndGo.img = R.mipmap.ic_launcher;
-                    //Edit Background Color
-                    PayAndGo.backGroundColor = "#ffffff";
-                    //Edit TextCaption
-                    PayAndGo.textMessage = "Paga con ClipClap";
-                    //Edit TextCaption color
-                    PayAndGo.textMessageColor = "#000000";
-                    //Edit Button Text
-                    PayAndGo.buttonText = "Pagar";
-                    //Edit Button text color
-                    PayAndGo.buttonTextColor = "#ffffff";
-                    //Edit Button color
-                    PayAndGo.buttonColor = "#000000";
-                    //Create deepLink CallBack
-                    */
+
 
                     PayAndGo.urlCallback = "PayAndGoSample://mydeeplink";
 

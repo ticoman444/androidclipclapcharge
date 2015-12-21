@@ -30,15 +30,14 @@ public class CCBilleteraPayment {
 
 
 
+   public CCBilleteraPayment(String secretKey) throws  Exception{
+       itemsArray = new JSONArray();
+       itemClipclap= new JSONObject();
+       itemClipclap.put(SECRETKEY,secretKey);
+       itemClipclap.put(DETAILS,itemsArray);
+   }
 
 
-
-    public void initialize(String secretKey) throws  Exception{
-        itemsArray = new JSONArray();
-        itemClipclap= new JSONObject();
-        itemClipclap.put(SECRETKEY,secretKey);
-        itemClipclap.put(DETAILS,itemsArray);
-    }
 
     public void addItem(String name, int count, int value, int taxId ) throws Exception{
         JSONObject jsonItem = new JSONObject();
