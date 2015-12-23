@@ -1,6 +1,7 @@
 package co.clipclap.payandgosample;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,17 +70,13 @@ public class ItemEnter extends AppCompatActivity {
 
 
         final PayAndGo button = (PayAndGo)findViewById(R.id.button);
-
-
-
         button.setSaveTokenListener(new SaveTokenListener() {
             @Override
             public void saveToken(String token) {
-                //TODO
-
-                Log.i("token",token);
-
-
+                //TODO Guardar Token
+                 Uri uri = Uri.parse(button.getUrl());
+                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                 startActivity(intent);
             }
         });
 
@@ -89,16 +86,10 @@ public class ItemEnter extends AppCompatActivity {
             public void onClick(View v) {
 
                 try {
-
-
                     //Create a new Object
                     CCBilleteraPayment ccBilleteraPayment = new CCBilleteraPayment("pKFe1P2iYw6z73srBDBx");
 
-                    PayAndGo.type = PayAndGo.DEVELOPMENT;
-
-
-
-
+                   // PayAndGo.type = PayAndGo.DEVELOPMENT;
                     for (Item item:items){
                         //Get info from UI
                         int value = item.value;

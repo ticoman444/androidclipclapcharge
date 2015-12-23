@@ -37,6 +37,7 @@ public class PayAndGo extends Button{
     public static JSONObject jsonObject;
     public static String failureMessage;
     public static String urlCallback;
+    private String token;
 
     public static int type;
     private  OnClickListener onClickListener;
@@ -55,6 +56,10 @@ public class PayAndGo extends Button{
             }
         });
 
+    }
+
+    public String getUrl(){
+        return urlDeep +  token  + "&callbackurl="+urlCallback;
     }
 
 public void setSaveTokenListener(SaveTokenListener saveTokenListener){
@@ -99,14 +104,17 @@ public void setSaveTokenListener(SaveTokenListener saveTokenListener){
 
         return holder;
     }
+
+    String url;
+    String urlDeep;
     private void click(){
         resetDialog();
         pd= DialogUtils.buildProgress(ctx, "Enviando datos");
         pd.show();
         Map<String, String> params= new HashMap<String, String>();
 
-         String url= (type==DEVELOPMENT)?"https://clipclap.co/Production/gatewayClipClap/sdk/clipclap.php":"https://clipclap.co/Production/gatewayClipClap/sdk/clipclap.php";
-    final String urlDeep=(type==DEVELOPMENT)?"ClipClapBilletera://?type=ClipClapWeb&token=":"ClipClapBilletera://?type=ClipClapWeb&token=";
+         url= (type==DEVELOPMENT)?"https://clipclap.co/Production/gatewayClipClap/sdk/clipclap.php":"https://clipclap.co/Production/gatewayClipClap/sdk/clipclap.php";
+         urlDeep=(type==DEVELOPMENT)?"ClipClapBilletera://?type=ClipClapWeb&token=":"ClipClapBilletera://?type=ClipClapWeb&token=";
         try {
             HttpService.post3(ctx,url
                     ,
@@ -117,11 +125,12 @@ public void setSaveTokenListener(SaveTokenListener saveTokenListener){
 
                             try {
 
-                                mSaveTokenListener.saveToken(response.getString("token").toString());
+                                token= response.getString("token").toString();
+                                mSaveTokenListener.saveToken(token);
 
-                                Uri uri = Uri.parse(urlDeep + response.getString("token").toString() + "&callbackurl="+urlCallback);
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                ctx.startActivity(intent);
+                               // Uri uri = Uri.parse(urlDeep ++ "&callbackurl="+urlCallback);
+                               // Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                               // ctx.startActivity(intent);
 
                             }catch (Exception e){
                                 e.printStackTrace();
