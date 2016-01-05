@@ -18,8 +18,8 @@ import java.util.List;
 public class ItemAdapter  extends ArrayAdapter<Item> {
 
 
-    public ItemAdapter(Context context, List<Item> bankInstitutionses) {
-        super(context, R.layout.item, bankInstitutionses);
+    public ItemAdapter(Context context, List<Item> items) {
+        super(context, R.layout.item, items);
     }
 
     @Override

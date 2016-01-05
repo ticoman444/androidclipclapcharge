@@ -86,8 +86,10 @@ public class ItemEnter extends AppCompatActivity {
             public void onClick(View v) {
 
                 try {
+
+                    EditText secretKey= (EditText)findViewById(R.id.secretkey);
                     //Create a new Object
-                    CCBilleteraPayment ccBilleteraPayment = new CCBilleteraPayment("pKFe1P2iYw6z73srBDBx");
+                    CCBilleteraPayment ccBilleteraPayment = new CCBilleteraPayment(secretKey.getText().toString());
 
                    // PayAndGo.type = PayAndGo.DEVELOPMENT;
                     for (Item item:items){
