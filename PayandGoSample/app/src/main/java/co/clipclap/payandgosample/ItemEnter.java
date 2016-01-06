@@ -74,9 +74,15 @@ public class ItemEnter extends AppCompatActivity {
             @Override
             public void saveToken(String token) {
                 //TODO Guardar Token
-                 Uri uri = Uri.parse(button.getUrl());
-                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                 startActivity(intent);
+                try {
+                    Uri uri = Uri.parse(button.getUrl());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }catch (Exception e){
+                    Uri uri = Uri.parse(PayAndGo.PLAYSTORE);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -87,12 +93,12 @@ public class ItemEnter extends AppCompatActivity {
 
                 try {
 
-                    EditText secretKey= (EditText)findViewById(R.id.secretkey);
+                    EditText secretKey = (EditText) findViewById(R.id.secretkey);
                     //Create a new Object
                     CCBilleteraPayment ccBilleteraPayment = new CCBilleteraPayment(secretKey.getText().toString());
 
-                   // PayAndGo.type = PayAndGo.DEVELOPMENT;
-                    for (Item item:items){
+                    // PayAndGo.type = PayAndGo.DEVELOPMENT;
+                    for (Item item : items) {
                         //Get info from UI
                         int value = item.value;
                         String name = item.name;
@@ -105,24 +111,29 @@ public class ItemEnter extends AppCompatActivity {
                     }
 
                     //Add Total, custom tax and tip
-                    EditText total= (EditText)findViewById(R.id.totalValue);
-                    if(!FieldUtils.isEmpty(total.getText().toString())){
-                        int totalV=Integer.parseInt(total.getText().toString());
-                        int tax=0;
-                        int tip=0;
-                        String description="";
-                        total= (EditText)findViewById(R.id.taxValue);
-                        if(!FieldUtils.isEmpty(total.getText().toString())){tax=Integer.parseInt(total.getText().toString());}
-                        total= (EditText)findViewById(R.id.tipValue);
-                        if(!FieldUtils.isEmpty(total.getText().toString())){tip=Integer.parseInt(total.getText().toString());}
-                        total= (EditText)findViewById(R.id.description);
-                        if(!FieldUtils.isEmpty(total.getText().toString())){description=total.getText().toString();}
-                        ccBilleteraPayment.addTotal(description,totalV,tax,tip);
+                    EditText total = (EditText) findViewById(R.id.totalValue);
+                    if (!FieldUtils.isEmpty(total.getText().toString())) {
+                        int totalV = Integer.parseInt(total.getText().toString());
+                        int tax = 0;
+                        int tip = 0;
+                        String description = "";
+                        total = (EditText) findViewById(R.id.taxValue);
+                        if (!FieldUtils.isEmpty(total.getText().toString())) {
+                            tax = Integer.parseInt(total.getText().toString());
+                        }
+                        total = (EditText) findViewById(R.id.tipValue);
+                        if (!FieldUtils.isEmpty(total.getText().toString())) {
+                            tip = Integer.parseInt(total.getText().toString());
+                        }
+                        total = (EditText) findViewById(R.id.description);
+                        if (!FieldUtils.isEmpty(total.getText().toString())) {
+                            description = total.getText().toString();
+                        }
+                        ccBilleteraPayment.addTotal(description, totalV, tax, tip);
                     }
 
 
                     PayAndGo.jsonObject = ccBilleteraPayment.getJSON();
-
 
 
                     PayAndGo.urlCallback = "PayAndGoSample://mydeeplink";

@@ -38,6 +38,7 @@ public class PayAndGo extends Button{
     public static String failureMessage;
     public static String urlCallback;
     private String token;
+    public static final String PLAYSTORE="https://play.google.com/store/apps/details?id=clipclap.app.clip&hl=es";
 
     public static int type;
     private  OnClickListener onClickListener;
