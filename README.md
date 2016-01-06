@@ -130,9 +130,16 @@ Hay dos forma de crear un cobro para que ClipClap Billetera lo gestione:
 	             //Antes de llamar a ClipClap Billetera guarda el 'token' retornado aquí en tu sistema de información.
                 
                 //LLamando a ClipClap Billetera para que gestione el cobro.
-                Uri uri = Uri.parse(button.getUrl());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+               try {
+                    Uri uri = Uri.parse(button.getUrl());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }catch (Exception e){
+                 //LLama a la PlayStore si no está instalada
+                    Uri uri = Uri.parse(PayAndGo.PLAYSTORE);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
             }
         });
 		
